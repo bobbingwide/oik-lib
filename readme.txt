@@ -1,19 +1,19 @@
-# oik-lib 
-* Contributors: bobbingwide, vsgloik
-* Donate link: http://www.oik-plugins.com/oik/oik-donate/
-* Tags: library, boot
-* Requires at least: 4.2
-* Tested up to: 4.3-beta3
-* Stable tag: 0.0.1
-* License: GPLv2 or later
-* License URI: http://www.gnu.org/licenses/gpl-2.0.html
-* Text Domain: oik-lib
-* Domain Path: /languages/
+=== oik-lib ===
+Contributors: bobbingwide, vsgloik
+Donate link: http://www.oik-plugins.com/oik/oik-donate/
+Tags: library, boot
+Requires at least: 4.2
+Tested up to: 4.3-beta3
+Stable tag: 0.0.1
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: oik-lib
+Domain Path: /languages/
 
-## Description 
+== Description ==
 Shared library management for WordPress plugins.
 
-# Background 
+= Background =
 
 In June 2015, other than extension plugins, very few WordPress plugins shared common logic.
 Hardly any implemented plugin dependency logic.
@@ -36,7 +36,7 @@ The plugin is intended to be easy to install and maintain and does not require S
 
 
 
-# Requirements 
+= Requirements = 
 
 * Shared delivery of library functions
 * Notification actions when libraries become available
@@ -46,11 +46,11 @@ The plugin is intended to be easy to install and maintain and does not require S
 * Crucial / critical functionality to be always available
 
 
-# Implementation 
+= Implementation =
 
 There are some library functions that are so crucial that these need to be available all the time.
 
-While they are not part of WordPress core, these functions will need to be implemented in such a way that they can be available
+While they are not part of WordPress core, these functions will need to be implemented in such a way that they can be available 
 for use by any plugin or theme at all times.
 
 This plugin achieves this by becoming a MU plugin.
@@ -67,40 +67,40 @@ Advanced logic, dynamically loadable on demand, will be used to attempt to resol
 
 
 
-## Installation 
+== Installation ==
 1. Upload the contents of the oik-lib plugin to the `/wp-content/plugins/oik-lib' directory
 1. Activate the oik-lib plugin through the 'Plugins' menu in WordPress
 
-## Frequently Asked Questions 
-# Where are the FAQs 
+== Frequently Asked Questions ==
+= Where are the FAQs =
 See the official plugin documentation at [oik-plugins](http://oik-plugins.com/oik-plugins/oik-lib)
 
 
-## Screenshots 
+== Screenshots ==
 1. oik-lib in action
 
-## Upgrade Notice 
-# 0.0.1 
-First version for WordPress PHP library management
+== Upgrade Notice ==
+= 0.0.1 =
+First version for WordPress PHP library management  
 
 
-## Changelog 
-# 0.0.1 
+== Changelog == 
+= 0.0.1 =
 * Added: New plugin
 
 
-## Further reading 
+== Further reading ==
 If you want to read more about the oik plugins then please visit the
-[oik plugin](http://www.oik-plugins.com/oik)
+[oik plugin](http://www.oik-plugins.com/oik) 
 **"the oik plugin - for often included key-information"**
 
 
 Notes on BackPress
 
 The development of the oik-lib plugin was not influenced by BackPress but in some respects appears
-remarkably similar at some base levels.
+remarkably similar at some base levels. 
 
-There are other projects similar to oik-lib.
+There are other projects similar to oik-lib. 
 See the FAQs for more information.
 
 
