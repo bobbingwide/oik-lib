@@ -154,7 +154,6 @@ class OIK_libs {
 	 *
 	 */
 	function query_libs( $force=false ) {
-		bw_backtrace();
 		if ( !$this->did_query_libs || $force ) {
 			$this->libraries = apply_filters( "oik_query_libs", $this->libraries ); 
 		}

@@ -83,7 +83,6 @@ See the official plugin documentation at [oik-plugins](http://oik-plugins.com/oi
 = 0.0.2 =
 Upgrade to get better support for plugins performing dependency checking
 
-
 = 0.0.1 =
 First version for WordPress PHP library management  
 

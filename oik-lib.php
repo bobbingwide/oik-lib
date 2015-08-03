@@ -65,7 +65,11 @@ function oik_lib_maybe_activate_mu() {
 }
 
 /**
- * Implement "admin_notices" for oik-lib 
+ * Implement "admin_notices" for oik-lib
+ *
+ * Hard code our dependency on oik-depends 
+ * @TODO Explain why do we need to do this... since it's oik-lib? 
+ * 
  */
 function oik_lib_admin_notices() {
 	$loaded = oik_require_lib( "oik-depends" );
@@ -73,7 +77,6 @@ function oik_lib_admin_notices() {
 	
 	$loaded = oik_require_lib( "oik-activation" );
 	bw_trace2( $loaded, "oik-activation loaded?", false );
-	//gob();
 } 
 
 /**
@@ -112,7 +115,6 @@ function oik_lib_oik_query_libs( $libraries ) {
 	$libs = array( "bobbfunc" => null, "bobbforms" => "bobbfunc", "oik-admin" => "bobbforms", "oik-depends" => null, "oik-activation" => "oik-depends" );
 	$libraries = oik_lib_check_libs( $libraries, $libs, "oik-lib" );
 	bw_trace2();
-	//gob();
 	return( $libraries );
 }
 
@@ -160,7 +162,6 @@ function oik_libs_reset_libs() {
  *
  */
 function oik_lib_loaded() {
-	bw_trace2();
 	if ( oik_lib_boot_oik_lib() ) { 
 		bw_trace2( "oik_lib_boot_oik_lib worked" );
 		add_filter( "oik_query_libs", "oik_lib_oik_query_libs" );
