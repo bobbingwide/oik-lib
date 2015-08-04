@@ -101,7 +101,7 @@ function oik_require2( $include_file="bobbfunc.inc", $to_plugin, $from_plugin="o
 */ 
 if ( !function_exists( "oik_init" ) ) {
 function oik_init( ) {
-  oik_require( 'bwtrace.php' );
+  oik_require_lib( 'bwtrace' );
 }
 } 
  
