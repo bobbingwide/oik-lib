@@ -85,11 +85,17 @@ function oik_libs() {
  * Similar to wp_enqueue_script() in its implementation
  * 
  * A plugin can use oik_register_lib() to define the libraries that it Provides
- * even when the library has not yet been initialised
- * Alternatively a plugin can return this information in response to the "oik_lib_query_lib" filter
+ * even when the library has not yet been initialised.
+ * Alternatively a plugin can return this information in response to the "oik_query_libs" filter
  * 
- * The OIK_libs class 
+ * You get access to the OIK_libs class using oik_libs().
  *
+ * @param string $library library name
+ * @param string $src source file
+ * @param string|array $deps dependencies
+ * @param string $version current version
+ * @param array $args additional parameters
+ * @return object an OIK_lib object 
  */
 function oik_register_lib( $library, $src=null, $deps=array(), $version=null, $args=null ) {
 	$oik_libs = oik_libs();
@@ -105,6 +111,7 @@ function oik_register_lib( $library, $src=null, $deps=array(), $version=null, $a
  *
  * @param string $library the name of the (registered) library
  * @param string $version the required library version. null means don't care
+ * @param array $args additional parameters
  * @return string the full path to the library file to load
  */
 if ( !function_exists( "oik_require_lib" ) ) { 
@@ -121,6 +128,7 @@ function oik_require_lib( $library, $version=null, $args=null ) {
  * 
  * @param string $library the name of the (registered) library
  * @param string $version the required library version. null means don't care
+ * @param array $args additional parameters
  * @return string the full path to the library file to load
  */ 
 function oik_lib_determine_lib( $library, $version=null, $args=null ) {
@@ -131,6 +139,11 @@ function oik_lib_determine_lib( $library, $version=null, $args=null ) {
 
 /**
  * Require a library function
+ * 
+ * @param string $library the library name
+ * @param string $func the function name
+ * @param string $version the library version required
+ * @param array $args additional parameters
  *
  */
 function oik_require_func( $library, $func, $version=null, $args=null ) {
@@ -165,6 +178,11 @@ function oik_lib_register_default_libs() {
  * This routine checks for the existence of the source file
  * before it's added to the array of libraries.
  * It doesn't check for the dependencies.
+ *
+ * @TODO Note: This may be inefficient. There may be libraries that are hardly ever requested
+ * It would be better if we defer the file_exists() logic until the library is actually requested. 
+ * Similarly, we may defer the building of $src... which would require setting a "plugin" or "theme" parameter
+ * and possible a "libs" path. 
  *
  * @param array $libraries array of registered libraries
  * @param array $libs array of libraries to add in form "library" => "dependencies"
