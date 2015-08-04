@@ -56,7 +56,6 @@ class OIK_libs {
 		return self::$instance;
 	}
 	
-	
 	/**
 	 * Constructor
 	 *
@@ -75,8 +74,7 @@ class OIK_libs {
 	 * @param array $deps dependencies on other libraries
 	 * @param string $ver version
 	 * @param array $args additional arguments for more advanced dependencies and other stuff
-	 *
-	 * @return 
+	 * @return object an OIK_lib object 
 	 */
 	function register_lib( $library, $src=null, $deps=null, $ver=null, $args=null ) {
 	
@@ -117,6 +115,19 @@ class OIK_libs {
 	 */
 	function deregister_lib( $library ) {
 	
+	}
+	
+	/**
+	 * Create a WordPress error 
+	 *
+	 * @param string $code Error code
+	 * @param string $text Translatable text further defining the code
+	 * @param mixed $data Additional error data
+	 * @return a WP_Error instance
+	 */
+	function error( $code, $text=null, $data=null ) {
+		$error = new WP_Error( $code, $text, $data );
+		return( $error );
 	} 
 	
 	/**
@@ -129,13 +140,20 @@ class OIK_libs {
 	function require_lib( $library, $version=null ) {
 		$this->query_libs();
 		$lib = $this->determine_lib( $library, $version );
-		if ( $lib ) {
-			if ( file_exists( $lib->src ) ) {
-				require_once( $lib->src ); 
-				$this->loaded( $lib );
+		if ( !is_wp_error( $lib ) ) {
+			if ( $lib ) {
+				if ( file_exists( $lib->src ) ) {
+					require_once( $lib->src ); 
+					$this->loaded( $lib );
+				} else {
+					bw_trace2( $lib, "Library file missing" );
+					$lib = false;
+					$lib = $this->error( "missing", "Library file missing", $lib );
+				}
 			} else {
-				bw_trace2( $lib, "Library file missing" );
-				$lib = false;
+				bw_trace2( $lib, "lib not found for $library,$version" );
+				bw_backtrace();
+				$lib = $this->error( "not found", "lib not found for $library,$version", "$library,$version" );
 			}
 		}
 		return( $lib );
@@ -215,12 +233,34 @@ class OIK_libs {
 	 * Determine if the current version is compatible with the required version
 	 *
 	 * @TODO Decide what to do about version checking, which is already fully implemented for packages in Composer
+	 * $version_compare | comparison		 | means
+	 * ---------------- | -------------- | -------------------  
+	 * -1              | current < required | no good
+	 * 0               |  current = required | that's fine and dandy
+	 * 1               |  current > required
 	 *
 	 * @param string $current_version a specific version
 	 * @param string $required_version may include wildcards
 	 */ 
 	function compatible_version( $current_version, $required_version ) {
-		return( true );
+		bw_trace2();
+		$version_compare = version_compare( $current_version, $required_version );
+		$acceptable = false;
+		bw_trace2( $version_compare, "version compare", false );
+		switch ( $version_compare ) {
+			case 0:
+					$acceptable = true;
+				break;
+			case -1:
+				break;
+				
+			default:
+				// Now we have to check semantic versioning
+				// but in the mean time pretend it's acceptable
+				$acceptable = true;
+				
+		}
+		return( $acceptable );
 	}
 	
 	/**
@@ -228,26 +268,47 @@ class OIK_libs {
 	 *
 	 * Find the $lib that satisfies this request for a library / version combination
 	 *
+	 * @TODO This function currently has a side effect of loading dependent libraries
+	 *
+	 * @param string $library library name
+	 * @param string $version version required
+	 * @return mixed lib object or WP_Error
 	 */
 	function determine_lib( $library, $version ) {
+		bw_trace2();
 	
 		$selected = $this->is_loaded( $library, $version );
 		if ( !$selected ) {
 			if ( $this->libraries && count( $this->libraries ) ) {
 				foreach ( $this->libraries as $key => $lib ) {
 					if ( $lib->library == $library ) {
+						$compatible = $this->compatible_version( $lib->version, $version );
 						$selected = $this->is_already_loaded( $lib );
 						if ( !$selected ) {
-							if ( $this->compatible_version( $lib->version, $version ) ) {
+							if ( $compatible ) {
 								$selected = $this->load_dependencies( $lib ); 
 								$selected = $lib;
+							} else {
+								/* Not already loaded but this versions not compatible so move on */
 							}
+						} else {
+							if ( $compatible ) {
+								/* Good */
+							} else {
+								$selected = $this->error( "incompatible", "Incompatible library already loaded", $lib );
+							}
+							
 						}
 						if ( $selected ) {
 							break;
 						}
 					}	
 				}
+			}
+		} else {
+			$compatible = $this->compatible_version( $selected->version, $version );
+			if ( !$compatible ) {
+				$selected = $this->error( "incompatible", "Incompatible library already loaded", $selected );
 			}
 		}
 		bw_trace2( $selected, "selected" );
@@ -266,6 +327,7 @@ class OIK_libs {
 		if ( !$checked ) {
 			$lib_deps = $lib->deps();
 			if ( $lib_deps ) {
+				bw_trace2( $lib_deps, "lib_deps" );
 				foreach ( $lib_deps as $library => $version ) {
 					$checked = $this->require_lib( $library, $version );		
 				}
