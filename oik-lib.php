@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: oik library management 
-Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib
+Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/
 Description: OIK library management - for shared libraries
 Version: 0.0.2
 Author: bobbingwide
@@ -80,9 +80,11 @@ function oik_lib_admin_notices() {
 } 
 
 /**
- * Boot ourselves up using the shared libraries "lib-boot", "lib-trace" and "lib-require"
+ * Boot ourselves up using the initial shared libraries
  *
- * Then register the shared libraries so that other plugins can use oik_require_lib()
+ * If not already loaded we load the "oik-lib" library
+ * then we invoke oik_lib_boot() to ensure the libraries upon which
+ * oik-lib is dependent are loaded. 
  * 
  * @return bool true if the initial libraries loaded 
  * 
@@ -104,17 +106,19 @@ function oik_lib_boot_oik_lib() {
 /**
  * Implement "oik_query_libs" for oik-lib
  *
- * Note: The library files should exist. 
- * Their presence should be checked before they're added to the array
+ * Note: In order for  a plugin to share a library the library file should exist.
+ * Its presence is determined by oik_lib_check_libs() 
+ 
  * @TODO Add version information... this can be deferred until the library is actually needed.
  *
  * @param array $libraries the registered libraries
  * @return array the registered libraries
  */ 
 function oik_lib_oik_query_libs( $libraries ) {
-	$libs = array( "bobbfunc" => null, "bobbforms" => "bobbfunc", "oik-admin" => "bobbforms", "oik-depends" => null, "oik-activation" => "oik-depends" );
-	$libraries = oik_lib_check_libs( $libraries, $libs, "oik-lib" );
 	bw_trace2();
+	$libs = array( "bobbfunc" => null, "bobbforms" => "bobbfunc:3.0.0", "oik-admin" => "bobbforms", "oik-depends" => null, "oik-activation" => "oik-depends" );
+	$libraries = oik_lib_check_libs( $libraries, $libs, "oik-lib" );
+	bw_trace2( $libraries, "new libraries" );
 	return( $libraries );
 }
 
@@ -137,12 +141,38 @@ function oik_lib_options_add_page() {
  * 
  */
 function oik_lib_init() {
-	bw_load_plugin_textdomain( 'oik-lib' );
+	bw_backtrace();
+	load_plugin_textdomain( 'oik-lib' );
 }
 
-function oik_libs_reset_libs() {
+
+/**
+ * Implement "plugins_loaded" action for "oik-lib"
+ * 
+ */ 
+function oik_lib_reset_libs() {
 	$oik_lib = oik_libs();
 	$oik_lib->reset();
+}
+
+/**
+ * Implement "wp_loaded" action for oik-lib
+ *
+ * @TODO Decide whether or not oik-lib will actually provide the oik-admin, bobbforms and bobbfunc shared libraries
+ *
+ * Note: Prior to v3.0.0 bobbfunc did not provide bw_as_array(), which is needed by oik-lib admin
+ * So we need to check for this first. 
+ * The oik-admin library, which is dependent upon bobbforms, which is dependent upon bobbfunc, is not aware of this problem.
+ *  
+ */
+function oik_lib_wp_loaded() {
+	$bobbfunc = oik_require_lib( "bobbfunc", "3.0.0" ); 
+	bw_trace2( $bobbfunc, "bobbfunc?" );
+	if ( !is_wp_error( $bobbfunc ) ) {
+		if ( !is_wp_error( oik_require_lib( "oik-admin" ) ) && !is_wp_error( oik_require_lib( "bobbforms" ) ) ) {
+			add_action( 'admin_menu', 'oik_lib_options_add_page');
+		}
+	}
 }
 
 /**
@@ -164,14 +194,12 @@ function oik_libs_reset_libs() {
 function oik_lib_loaded() {
 	if ( oik_lib_boot_oik_lib() ) { 
 		bw_trace2( "oik_lib_boot_oik_lib worked" );
-		add_filter( "oik_query_libs", "oik_lib_oik_query_libs" );
+		add_filter( "oik_query_libs", "oik_lib_oik_query_libs", 11 );
 		add_action( "admin_menu", "oik_lib_admin_menu" );
 		oik_lib_fallback( __DIR__ . "/libs" );
-		if ( oik_require_lib( "oik-admin" ) && oik_require_lib( "bobbforms" ) && oik_require_lib( "bobbfunc" )  ) {
-			add_action( 'admin_menu', 'oik_lib_options_add_page');
-		} 
 		add_action( "init", "oik_lib_init" );
-		add_action( "plugins_loaded", "oik_libs_reset_libs" );
+		add_action( "plugins_loaded", "oik_lib_reset_libs" );
+		add_action( "wp_loaded", "oik_lib_wp_loaded" );
 	}
 }	
 

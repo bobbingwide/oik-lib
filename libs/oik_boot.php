@@ -1,6 +1,6 @@
 <?php // (C) Copyright Bobbing Wide 2012-2015
 if ( !defined( 'OIK_BOOT_INCLUDED' ) ) {
-define( 'OIK_BOOT_INCLUDED', "2.6" );
+define( 'OIK_BOOT_INCLUDED', "3.0.0" );
 define( 'OIK_BOOT_FILE', __FILE__ );
 /**
  * Library: oik_boot
@@ -148,19 +148,17 @@ if ( !function_exists( 'bw_array_get' ) ) {
 }
 
 /**
- * Require a library, without oik-libs
+ * Require a library, with/without oik-libs
  *
- * Locates and loads (once) a library in order to make functions available to the invoking routine
- * This replaces oik_require() for simple library files where the plugin provides these files
+ * Locates and loads (once) a library in order to make functions available to the invoking routine.
+ * This replaces oik_require() for simple library files where the plugin provides these files.
  * The library file name is expected to match the library name and to be stored in the same folder as
  * the file containing this function.	
  * Note: We don't expect "oik_boot.php" to appear anywhere in __FILE__ except the end.
- * 
- * 
  *
  * @param string $library the name of the (registered) library
  * @param string $version the required library version. null means don't care
- * @return object/bool the library loaded or a simple bool if oik_libs is not loaded
+ * @return object/bool the library loaded or a simple bool if oik_libs is not loaded, so we used the fallback
  */
 if ( !function_exists( "oik_require_lib" ) ) { 
 	function oik_require_lib( $library, $version=null, $args=null ) {
@@ -212,8 +210,6 @@ if ( !function_exists( "oik_require_lib" ) ) {
  * @return array fallback directories so far
  */
 function oik_lib_fallback( $lib_dir ) {
-	//echo "Fallback dir: $lib_dir" ;
-	//gob();
 	global $oik_lib_fallback;
 	if ( empty( $oik_lib_fallback ) ) {
 		if ( __DIR__ == $lib_dir ) {

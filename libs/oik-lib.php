@@ -1,6 +1,6 @@
 <?php // (C) Copyright Bobbing Wide 2015
 if ( !defined( 'OIK_LIB_INCLUDED' ) ) {
-define( 'OIK_LIB_INCLUDED', "0.1" );
+define( 'OIK_LIB_INCLUDED', "0.0.2" );
 
 /**
  * oik library management functions
@@ -189,12 +189,15 @@ function oik_lib_check_libs( $libraries, $libs, $plugin ) {
 /**
  * Satisfy pre-requisites for oik-lib shared library processing
  *
- * The oik-lib library is dependent upon "oik_boot" and "bwtrace"
- * These are shared libraries from "oik" and "oik-bwtrace" plugins
- * If they are not registered by these plugins then we need to load them ourselves
+ * The "oik-lib" library is dependent upon "oik_boot" and "bwtrace".
+ * "oik_boot" for functions such as oik_require() and "bwtrace" for the trace APIs
  *
+ * These are shareable shared libraries from the "oik" and "oik-bwtrace" plugins.
+ * 
+ * If they are not registered by these plugins then we need to load them ourselves.
+ * Having loaded these shared libraries we register them so that other plugins can use oik_require_lib()
  *
- * @return bool true if "oik_boot" and "bwtrace" 
+ * @return bool true if "oik_boot" and "bwtrace" both loaded 
  */
 function oik_lib_boot() {
 	$loaded = true;

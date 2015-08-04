@@ -1,10 +1,10 @@
 === oik-lib ===
 Contributors: bobbingwide, vsgloik
 Donate link: http://www.oik-plugins.com/oik/oik-donate/
-Tags: library, boot
+Tags: library, boot, shared, trace, Must-Use, dependency, version
 Requires at least: 4.2
 Tested up to: 4.3-RC1
-Stable tag: 0.0.1
+Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: oik-lib
@@ -38,13 +38,17 @@ The plugin is intended to be easy to install and maintain and does not require S
 
 = Requirements = 
 
-* Shared delivery of library functions
-* Notification actions when libraries become available
-* API to request libraries
-* Automatic dependency resolution
-* Automatic conflicy resolution
-* Crucial / critical functionality to be always available
 
+* Ability to request a library
+* Notification actions when dependencies satisfied
+* Plugin dependency checking
+* Plugin download and activation
+* Shared delivery of library functions
+* Applicable to plugins and themes
+* Fallback support for standalone plugins
+* Version checking
+
+See [oik-lib - requirements summary](http://www.oik-plugins.com/wordpress-plugins-from-oik-plugins/free-oik-plugins/oik-lib-shared-library-management/oik-lib-requirements-summary/)
 
 = Implementation =
 
@@ -90,6 +94,17 @@ First version for WordPress PHP library management
 == Changelog == 
 = 0.0.2 = 
 * Fixed: Corrected logic around plugin dependency checking
+* Changed: libs/bwtrace.php now at 2.0.1
+* Changed: libs/oik-lib.php now at 0.0.2
+* Changed: libs/oik_boot.php now at 3.0.0
+* Changed: Now dependent upon bobbfunc:3.0.0 - for bw_as_array()
+* Changed: Implements hook for admin_notices earlier; now priority 8, was 9.
+* Changed: Corrected names of the default libraries in the comments
+* Changed: Now dependent upon bobbfunc v3.0.0
+* Fixed: oik_lib_init() uses load_plugin_textdomain() instead of bw_load_plugin_textdomain()
+* Changed: Defers admin checks until "wp_loaded". Now tests for WP_errors in the response
+* Changed: Implements "oik_query_libs" with a lower priority than oik
+
 
 = 0.0.1 =
 * Added: New plugin
