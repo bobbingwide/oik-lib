@@ -105,7 +105,6 @@ First version for WordPress PHP library management
 * Changed: Defers admin checks until "wp_loaded". Now tests for WP_errors in the response
 * Changed: Implements "oik_query_libs" with a lower priority than oik
 
-
 = 0.0.1 =
 * Added: New plugin
 
