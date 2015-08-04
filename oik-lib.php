@@ -43,7 +43,9 @@ function oik_lib_admin_menu() {
  * Activate the MU version of this plugin
  *
  * When the plugin is deactivated then the MU plugin may also be deactivated.
- * In order to achieve, before the plugin is deactivated, enable-mu should be set to false, . 
+ * In order to achieve this, before the plugin is deactivated, enable-mu should be set to false.
+ * Note: If oik is not active then bw_get_option() won't be available so the MU logic can only be
+ * controlled by the constant. 
  * 
  *
  * @TODO Should this use oik_require_lib()? 
@@ -160,9 +162,13 @@ function oik_lib_reset_libs() {
  *
  * @TODO Decide whether or not oik-lib will actually provide the oik-admin, bobbforms and bobbfunc shared libraries
  *
- * Note: Prior to v3.0.0 bobbfunc did not provide bw_as_array(), which is needed by oik-lib admin
- * So we need to check for this first. 
+ * Note: Prior to v3.0.0 bobbfunc did not provide bw_as_array().
+ * This function is currently needed by oik-lib admin.
  * The oik-admin library, which is dependent upon bobbforms, which is dependent upon bobbfunc, is not aware of this problem.
+ * It doesn't currently have any version dependency.
+ *
+ * So we need to check for this first. 
+ * Note: We have to wrap each call to oik_require_lib() with !is_wp_error() 
  *  
  */
 function oik_lib_wp_loaded() {
