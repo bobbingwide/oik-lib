@@ -1,10 +1,10 @@
 <?php // (C) Copyright Bobbing Wide 2015
 
 /*
-Plugin Name: _oik-lib-MU
+Plugin Name: __oik-lib-MU
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib
 Description: oik library management - MU version
-Version: 0.1
+Version: 0.0.2
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 License: GPL2
