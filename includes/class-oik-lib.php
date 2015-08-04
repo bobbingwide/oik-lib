@@ -91,8 +91,13 @@ class OIK_lib {
 		if ( null === $this->deps ) {
 			$deps = bw_array_get( $this->args, 'deps', null );
       if ( !is_array( $deps ) )	{
-				$deps = explode( ",", $deps );
+				if ( $deps ) {
+					$deps = explode( ",", $deps );
+				} else {
+					$deps = array();
+				}
 			}
+			bw_trace2( $deps, "deps", false );
 			$deps_array = array();
 			if ( count( $deps ) ) {
 				foreach ( $deps as $key => $value ) {
