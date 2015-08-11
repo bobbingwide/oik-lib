@@ -41,6 +41,8 @@ define( 'OIK_LIB_INCLUDED', "0.0.2" );
  * oik    | bobbforms
  * oik    | bobbfunc
  * oik    | oik-admin
+ * 
+ * @TODO Correct this list to reflect actual libraries
  * oik    | lib-fields
  * oik    | lib-shortcodes
  * oik    | lib-depends
@@ -50,14 +52,12 @@ define( 'OIK_LIB_INCLUDED', "0.0.2" );
  * Note: These "libraries" are more modular than the PHP libraries listed in 
  * {@link https://github.com/ziadoz/awesome-php#dependency-management-extras}
  * You may want to consider them as modules, similar to Drupal modules or those implemented by Jetpack.
- * The difference between a library and a plugin is that the library provides some functionality.
+ * The difference between a library and a plugin is that the library simply provides some functionality, the plugin implements it.
  * 
  * The difference between a library and an include file is that the library is dynamically fetched when required;
  * it's not just loaded at startup in the vain assumption that it's going to be needed.
  *  
  * The difference between a library and a package has yet to be defined.
- * 
- * 
  */
  
 /**
@@ -89,6 +89,9 @@ function oik_libs() {
  * Alternatively a plugin can return this information in response to the "oik_query_libs" filter
  * 
  * You get access to the OIK_libs class using oik_libs().
+ * 
+ * @TODO Any invocation of oik_register_lib() that's run before "plugins_loaded" may not cause the library to appear in the list of libraries
+ * Unless you're oik-lib, it's not safe to call oik_register_lib() until the "oik_query_libs" filter has been called.
  *
  * @param string $library library name
  * @param string $src source file
