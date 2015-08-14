@@ -88,6 +88,7 @@ function oik_lib_display_libraries() {
 		//bw_trace2( $data, "data" );
 		//$data->deps();
 		$data->deps = $data->args['deps'];
+		unset( $data->error );
 		bw_tablerow( $data );
 	}
 	etag( "table" );
