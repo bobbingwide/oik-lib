@@ -3,8 +3,8 @@
 * Donate link: http://www.oik-plugins.com/oik/oik-donate/
 * Tags: library, boot, shared, trace, Must-Use, dependency, version
 * Requires at least: 4.2
-* Tested up to: 4.3-RC1
-* Stable tag: 0.0.2
+* Tested up to: 4.3-RC2
+* Stable tag: 0.0.3
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Text Domain: oik-lib
@@ -38,15 +38,14 @@ The plugin is intended to be easy to install and maintain and does not require S
 
 # Requirements 
 
-
 * Ability to request a library
 * Notification actions when dependencies satisfied
 * Plugin dependency checking
-* Plugin download and activation
 * Shared delivery of library functions
 * Applicable to plugins and themes
 * Fallback support for standalone plugins
 * Version checking
+* Support Composer packages
 
 See [oik-lib - requirements summary](http://www.oik-plugins.com/wordpress-plugins-from-oik-plugins/free-oik-plugins/oik-lib-shared-library-management/oik-lib-requirements-summary/)
 
@@ -84,6 +83,10 @@ See the official plugin documentation at [oik-plugins](http://oik-plugins.com/oi
 1. oik-lib in action
 
 ## Upgrade Notice 
+# 0.0.3 
+Upgrade for support for Composer packages. See oik-fum sample plugin.
+Please also upgrade oik and oik-bwtrace.
+
 # 0.0.2 
 Upgrade to get better support for plugins performing dependency checking
 
@@ -92,6 +95,16 @@ First version for WordPress PHP library management
 
 
 ## Changelog 
+# 0.0.3 
+* Added: Add screenshot of the oik-lib admin page
+* Added: oik-admin, bobbforms and bobbfunc for admin page
+* Added: oik_require_file() API uses OIK_libs::require_file() method
+* Added: support for Composer libraries with multiple files
+* Changed: Delivers and loads oik-admin shared library
+* Changed: Don't display the "error" column
+* Changed: set oik-depends library to v3.0.0
+* Changed: some comment changes
+
 # 0.0.2 
 * Fixed: Corrected logic around plugin dependency checking
 * Changed: libs/bwtrace.php now at 2.0.1
@@ -113,15 +126,6 @@ First version for WordPress PHP library management
 If you want to read more about the oik plugins then please visit the
 [oik plugin](http://www.oik-plugins.com/oik)
 **"the oik plugin - for often included key-information"**
-
-
-Notes on BackPress
-
-The development of the oik-lib plugin was not influenced by BackPress but in some respects appears
-remarkably similar at some base levels.
-
-There are other projects similar to oik-lib.
-See the FAQs for more information.
 
 
 
