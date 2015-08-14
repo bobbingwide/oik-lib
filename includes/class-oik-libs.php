@@ -133,7 +133,7 @@ class OIK_libs {
 	/**
 	 * Require a library file
 	 *
-	 * @param string $library the library name e.g. "lib-boot"
+	 * @param string $library the library name e.g. "oik_boot"
 	 * @param string $version the required library version e.g "2.5" - with wildcard stuff
 	 * @return object the lib object loaded
 	 */
@@ -142,6 +142,7 @@ class OIK_libs {
 		$lib = $this->determine_lib( $library, $version );
 		if ( !is_wp_error( $lib ) ) {
 			if ( $lib ) {
+				$lib->src();
 				if ( file_exists( $lib->src ) ) {
 					require_once( $lib->src ); 
 					$this->loaded( $lib );
@@ -233,32 +234,44 @@ class OIK_libs {
 	 * Determine if the current version is compatible with the required version
 	 *
 	 * @TODO Decide what to do about version checking, which is already fully implemented for packages in Composer
+	 *
 	 * $version_compare | comparison		 | means
 	 * ---------------- | -------------- | -------------------  
 	 * -1              | current < required | no good
 	 * 0               |  current = required | that's fine and dandy
 	 * 1               |  current > required
+	 * 
+	 * current | required | Means
+	 * ------- | -------- | -----------
+	 * any     | *        | OK
+	 * x       | y        | -1 = no good
+	 * x       | x        | 0 = OK
+	 * y       | x        | actually we need to do semantic versioning checking  
 	 *
 	 * @param string $current_version a specific version
 	 * @param string $required_version may include wildcards
 	 */ 
 	function compatible_version( $current_version, $required_version ) {
 		bw_trace2();
-		$version_compare = version_compare( $current_version, $required_version );
-		$acceptable = false;
-		bw_trace2( $version_compare, "version compare", false );
-		switch ( $version_compare ) {
-			case 0:
+		if ( "*" != $required_version ) {
+			$version_compare = version_compare( $current_version, $required_version );
+			$acceptable = false;
+			bw_trace2( $version_compare, "version compare", false );
+			switch ( $version_compare ) {
+				case 0:
+						$acceptable = true;
+					break;
+				case -1:
+					break;
+					
+				default:
+					// Now we have to check semantic versioning
+					// but in the mean time pretend it's acceptable
 					$acceptable = true;
-				break;
-			case -1:
-				break;
+			}
 				
-			default:
-				// Now we have to check semantic versioning
-				// but in the mean time pretend it's acceptable
-				$acceptable = true;
-				
+		} else { 
+			$acceptable = true;
 		}
 		return( $acceptable );
 	}
@@ -380,6 +393,34 @@ class OIK_libs {
 		return( $required_func );
 	}
 	
+	/**
+	 * Require a library file
+	 *
+	 * Require a file to be loaded from a library.
+	 * More often than not, we expect this to work.
+	 *
+	 * @param string $file relative file name ( without leading slash )
+	 * @param string $library library name
+	 * @param array $args additional parameters
+	 * @return mixed OIK_lib or WP_Error ?
+	 */
+	function require_file( $file, $library, $args=null ) {
+		$lib = $this->is_loaded( $library, null );
+		if ( $lib ) {
+			$file_path = $lib->path;
+			$file_path .= "/";
+			$file_path .= $file;
+      if ( file_exists( $file_path ) ) {
+				require_once( $file_path ); 
+			} else {
+				$lib = $this->error( "missing", "Requested file not in library", $file_path );
+			}
+		} else {
+			$lib = $this->error( "not loaded", "Library not loaded", $library );
+		}	
+		return( $lib );
+	}
+
 	/** 
 	 * Reset libraries
 	 *
