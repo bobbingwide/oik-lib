@@ -3,7 +3,7 @@
 Plugin Name: oik library management 
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/
 Description: OIK library management - for shared libraries
-Version: 0.0.2
+Version: 0.0.3
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-lib
@@ -35,6 +35,10 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 function oik_lib_admin_menu() {
 	bw_trace2();
 	bw_backtrace();
+	
+	$loaded = oik_require_lib( "oik-admin" );
+	//oik_lib_options_add_page();
+
 	oik_lib_maybe_activate_mu();
   add_action( "admin_notices", "oik_lib_admin_notices", 8 );
 } 
@@ -79,6 +83,7 @@ function oik_lib_admin_notices() {
 	
 	$loaded = oik_require_lib( "oik-activation" );
 	bw_trace2( $loaded, "oik-activation loaded?", false );
+	
 } 
 
 /**
@@ -108,7 +113,7 @@ function oik_lib_boot_oik_lib() {
 /**
  * Implement "oik_query_libs" for oik-lib
  *
- * Note: In order for  a plugin to share a library the library file should exist.
+ * Note: In order for a plugin to share a library the library file should exist.
  * Its presence is determined by oik_lib_check_libs() 
  
  * @TODO Add version information... this can be deferred until the library is actually needed.
