@@ -3,8 +3,8 @@
 * Donate link: http://www.oik-plugins.com/oik/oik-donate/
 * Tags: library, boot, shared, trace, Must-Use, dependency, version
 * Requires at least: 4.2
-* Tested up to: 4.3-RC2
-* Stable tag: 0.0.3
+* Tested up to: 4.3
+* Stable tag: 0.0.4
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Text Domain: oik-lib
@@ -83,6 +83,10 @@ See the official plugin documentation at [oik-plugins](http://oik-plugins.com/oi
 1. oik-lib in action
 
 ## Upgrade Notice 
+# 0.0.4 
+Synchronized with oik-bwtrace v2.0.7.
+Please also upgrade the oik base plugin and oik-bwtrace.
+
 # 0.0.3 
 Upgrade for support for Composer packages. See oik-fum sample plugin.
 Please also upgrade oik and oik-bwtrace.
@@ -95,6 +99,10 @@ First version for WordPress PHP library management
 
 
 ## Changelog 
+# 0.0.4 
+* Changed: Synchronized with oik-bwtrace v2.0.7
+* Changed: Synchronized with oik v3.0.0-alpha.0917
+
 # 0.0.3 
 * Added: Add screenshot of the oik-lib admin page
 * Added: oik-admin, bobbforms and bobbfunc for admin page

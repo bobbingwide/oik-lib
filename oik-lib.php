@@ -3,7 +3,7 @@
 Plugin Name: oik library management 
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/
 Description: OIK library management - for shared libraries
-Version: 0.0.3
+Version: 0.0.4
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-lib
@@ -33,8 +33,8 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
  * Implement "admin_menu" for oik-lib
  */
 function oik_lib_admin_menu() {
-	bw_trace2();
-	bw_backtrace();
+	bw_trace2( null, null, false, BW_TRACE_DEBUG );
+	//bw_backtrace();
 	
 	$loaded = oik_require_lib( "oik-admin" );
 	//oik_lib_options_add_page();
@@ -122,10 +122,10 @@ function oik_lib_boot_oik_lib() {
  * @return array the registered libraries
  */ 
 function oik_lib_oik_query_libs( $libraries ) {
-	bw_trace2();
+	bw_trace2( null, null, true, BW_TRACE_DEBUG );
 	$libs = array( "bobbfunc" => null, "bobbforms" => "bobbfunc:3.0.0", "oik-admin" => "bobbforms", "oik-depends" => null, "oik-activation" => "oik-depends" );
 	$libraries = oik_lib_check_libs( $libraries, $libs, "oik-lib" );
-	bw_trace2( $libraries, "new libraries" );
+	bw_trace2( $libraries, "new libraries", false, BW_TRACE_DEBUG );
 	return( $libraries );
 }
 
@@ -204,7 +204,7 @@ function oik_lib_wp_loaded() {
  */
 function oik_lib_loaded() {
 	if ( oik_lib_boot_oik_lib() ) { 
-		bw_trace2( "oik_lib_boot_oik_lib worked" );
+		bw_trace2( "oik_lib_boot_oik_lib worked", null, false, BW_TRACE_DEBUG );
 		add_filter( "oik_query_libs", "oik_lib_oik_query_libs", 11 );
 		add_action( "admin_menu", "oik_lib_admin_menu" );
 		oik_lib_fallback( __DIR__ . "/libs" );
