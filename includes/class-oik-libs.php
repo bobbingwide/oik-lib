@@ -1,4 +1,4 @@
-<?php // (C) Copyright Bobbing Wide 2015
+<?php // (C) Copyright Bobbing Wide 2015,2016
 
 /**
  * Class for micro managing shared libraries of PHP code
@@ -147,12 +147,12 @@ class OIK_libs {
 					require_once( $lib->src ); 
 					$this->loaded( $lib );
 				} else {
-					bw_trace2( $lib, "Library file missing" );
+					bw_trace2( $lib, "Library file missing", true, BW_TRACE_ERROR );
 					$lib = false;
 					$lib = $this->error( "missing", "Library file missing", $lib );
 				}
 			} else {
-				bw_trace2( $lib, "lib not found for $library,$version" );
+				bw_trace2( $lib, "lib not found for $library,$version", false, BW_TRACE_ERROR );
 				bw_backtrace();
 				$lib = $this->error( "not found", "lib not found for $library,$version", "$library,$version" );
 			}
@@ -205,7 +205,7 @@ class OIK_libs {
 			$this->compatible_version( $lib->version, $version );
 			$loaded = $lib;
 		} 
-		bw_trace2( $loaded, "loaded" );
+		bw_trace2( $loaded, "loaded", true, BW_TRACE_VERBOSE );
 		return( $loaded );
 	}
 	
@@ -221,12 +221,12 @@ class OIK_libs {
 		$src = $lib->src;
 		$src = str_replace( "/", DIRECTORY_SEPARATOR, $src );
 		$files = get_included_files();
-		bw_trace2( $files, "included files" );
+		bw_trace2( $files, "included files", false, BW_TRACE_VERBOSE );
 		$loaded = bw_array_get( array_flip( $files), $src, null );
 		if ( $loaded ) {
 			$loaded = $this->loaded( $lib );
 		}
-		bw_trace2( $loaded, "already loaded" );
+		bw_trace2( $loaded, "already loaded", true, BW_TRACE_DEBUG );
 		return( $loaded );		
 	}
 	
@@ -252,11 +252,11 @@ class OIK_libs {
 	 * @param string $required_version may include wildcards
 	 */ 
 	function compatible_version( $current_version, $required_version ) {
-		bw_trace2();
+		bw_trace2( null, null, true, BW_TRACE_VERBOSE );
 		if ( "*" != $required_version ) {
 			$version_compare = version_compare( $current_version, $required_version );
 			$acceptable = false;
-			bw_trace2( $version_compare, "version compare", false );
+			bw_trace2( $version_compare, "version compare", false, BW_TRACE_VERBOSE );
 			switch ( $version_compare ) {
 				case 0:
 						$acceptable = true;
@@ -288,7 +288,7 @@ class OIK_libs {
 	 * @return mixed lib object or WP_Error
 	 */
 	function determine_lib( $library, $version ) {
-		bw_trace2();
+		bw_trace2( null, null, true, BW_TRACE_VERBOSE );
 	
 		$selected = $this->is_loaded( $library, $version );
 		if ( !$selected ) {
@@ -324,7 +324,7 @@ class OIK_libs {
 				$selected = $this->error( "incompatible", "Incompatible library already loaded", $selected );
 			}
 		}
-		bw_trace2( $selected, "selected" );
+		bw_trace2( $selected, "selected", true, BW_TRACE_VERBOSE );
 		return( $selected );
 	}
 	
@@ -340,7 +340,7 @@ class OIK_libs {
 		if ( !$checked ) {
 			$lib_deps = $lib->deps();
 			if ( $lib_deps ) {
-				bw_trace2( $lib_deps, "lib_deps" );
+				bw_trace2( $lib_deps, "lib_deps", true, BW_TRACE_VERBOSE );
 				foreach ( $lib_deps as $library => $version ) {
 					$checked = $this->require_lib( $library, $version );		
 				}
@@ -366,7 +366,7 @@ class OIK_libs {
 		$checked = $this->is_loaded( $lib->library, $lib->version );
 		$checked = bw_array_get( $this->checked_libraries, $lib->library, $checked );
 		$this->checked_libraries[ $lib->library ] = $lib;
-		bw_trace2( $checked, "checked" );
+		bw_trace2( $checked, "checked", true, BW_TRACE_VERBOSE );
 		return( $checked );
 	}
 
@@ -407,7 +407,7 @@ class OIK_libs {
 	function require_file( $file, $library, $args=null ) {
 		$lib = $this->is_loaded( $library, null );
 		if ( $lib ) {
-			$file_path = $lib->path;
+			$file_path = $lib->path();
 			$file_path .= "/";
 			$file_path .= $file;
       if ( file_exists( $file_path ) ) {
