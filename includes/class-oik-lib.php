@@ -317,7 +317,7 @@ class OIK_lib {
 					$deps = array();
 				}
 			}
-			bw_trace2( $deps, "deps", false );
+			bw_trace2( $deps, "deps", false, BW_TRACE_DEBUG );
 			$deps_array = array();
 			if ( count( $deps ) ) {
 				foreach ( $deps as $key => $value ) {
