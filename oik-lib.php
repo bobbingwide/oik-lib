@@ -3,7 +3,7 @@
 Plugin Name: oik library management 
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/
 Description: OIK library management - for shared libraries
-Version: 0.0.4
+Version: 0.0.5
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-lib
@@ -11,7 +11,7 @@ Domain Path: /languages/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-    Copyright 2015 Bobbing Wide (email : herb@bobbingwide.com )
+    Copyright 2015,2016 Bobbing Wide (email : herb@bobbingwide.com )
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2,
@@ -122,10 +122,10 @@ function oik_lib_boot_oik_lib() {
  * @return array the registered libraries
  */ 
 function oik_lib_oik_query_libs( $libraries ) {
-	bw_trace2( null, null, true, BW_TRACE_DEBUG );
+	bw_trace2( null, null, true, BW_TRACE_VERBOSE );
 	$libs = array( "bobbfunc" => null, "bobbforms" => "bobbfunc:3.0.0", "oik-admin" => "bobbforms", "oik-depends" => null, "oik-activation" => "oik-depends" );
 	$libraries = oik_lib_check_libs( $libraries, $libs, "oik-lib" );
-	bw_trace2( $libraries, "new libraries", false, BW_TRACE_DEBUG );
+	bw_trace2( $libraries, "new libraries", false, BW_TRACE_VERBOSE );
 	return( $libraries );
 }
 
@@ -148,7 +148,7 @@ function oik_lib_options_add_page() {
  * 
  */
 function oik_lib_init() {
-	bw_backtrace();
+	bw_backtrace( BW_TRACE_VERBOSE );
 	load_plugin_textdomain( 'oik-lib' );
 }
 
@@ -211,6 +211,8 @@ function oik_lib_loaded() {
 		add_action( "init", "oik_lib_init" );
 		add_action( "plugins_loaded", "oik_lib_reset_libs" );
 		add_action( "wp_loaded", "oik_lib_wp_loaded" );
+	} else {
+		gob();
 	}
 }	
 
