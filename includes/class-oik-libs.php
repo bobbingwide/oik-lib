@@ -153,7 +153,7 @@ class OIK_libs {
 				}
 			} else {
 				bw_trace2( $lib, "lib not found for $library,$version", false, BW_TRACE_ERROR );
-				bw_backtrace();
+				bw_backtrace( BW_TRACE_ERROR );
 				$lib = $this->error( "not found", "lib not found for $library,$version", "$library,$version" );
 			}
 		}
