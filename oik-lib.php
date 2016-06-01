@@ -3,7 +3,7 @@
 Plugin Name: oik library management 
 Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/
 Description: OIK library management - for shared libraries
-Version: 0.0.6
+Version: 0.0.7
 Author: bobbingwide
 Author URI: http://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-lib
