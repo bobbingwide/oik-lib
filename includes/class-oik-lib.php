@@ -1,4 +1,4 @@
-<?php // (C) Copyriight Bobbing Wide 2015
+<?php // (C) Copyright Bobbing Wide 2015
 
 /**
  * Class OIK_lib

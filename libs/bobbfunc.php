@@ -1,12 +1,12 @@
 <?php // (C) Copyright Bobbing Wide 2009-2016
 if ( !defined( "BOBBFUNC_INCLUDED" ) ) {
-define( "BOBBFUNC_INCLUDED", "3.0.0" );
+define( "BOBBFUNC_INCLUDED", "3.1.0" );
 
 /**
  * HTML output library functions
  * 
  * Library: bobbfunc
- * Depends: oik_boot, bwtrace, bobbcomp
+ * Depends: oik_boot, bwtrace, class-bobbcomp
  * Provides: bobbfunc
  *
  * These functions were part of the oik base plugin in bobbfunc.inc and bobbcomp.inc
@@ -914,25 +914,33 @@ function bw_sc_snippet( $shortcode="oik" ) {
 }
 
 /**
-  * Dynamic jQuery setting the selector, function and option parameters
-  * When should we use?
-  * 
-  * jQuery(window).load(function() - when you need to wait for images to load?
-  * jQuery(function()
-  * jQuery(document).ready(function()
-  *
-*/  
+ * Dynamic jQuery setting the selector, function and option parameters
+ *
+ * When should we use?
+ * 
+ * - jQuery(window).load(function() - when you need to wait for images to load?
+ * - jQuery(function()
+ * - jQuery(document).ready(function()
+ *
+ * @param string $selector - the jQuery selector
+ * @param string $method - the jQuery method to invoke
+ * @param string $parms - parameters overriding the method's defaults
+ * @param bool $windowload
+ */  
 if ( !function_exists( "bw_jquery" ) ) {
 function bw_jquery( $selector, $method, $parms=null, $windowload=false ) {
-  bw_jq( "<script type=\"text/javascript\">" );
-  if ( $windowload ) {
-    $jqfn = "jQuery(window).load(function()";
-  } else {
-    $jqfn = "jQuery(document).ready(function()"; 
-  }    
-  $function = "$jqfn { jQuery( \"$selector\" ).$method( $parms ); });";
-  bw_jq( $function );
-  bw_jq( "</script>" );
+	if ( defined('DOING_AJAX') && DOING_AJAX ) {
+		return;
+	} 
+	bw_jq( "<script type=\"text/javascript\">" );
+	if ( $windowload ) {
+		$jqfn = "jQuery(window).load(function()";
+	} else {
+		$jqfn = "jQuery(document).ready(function()"; 
+	}    
+	$function = "$jqfn { jQuery( \"$selector\" ).$method( $parms ); });";
+	bw_jq( $function );
+	bw_jq( "</script>" );
 } 
 }
 
@@ -942,9 +950,9 @@ function bw_jquery( $selector, $method, $parms=null, $windowload=false ) {
  * @globals bw_jq
  */
 function bw_jq_flush() {
-  global $bw_jq;
-  echo $bw_jq;
-  $bw_jq = null;
+	global $bw_jq;
+	echo $bw_jq;
+	$bw_jq = null;
 }  
 
 /**
@@ -954,20 +962,19 @@ function bw_jq_flush() {
  * @global $bw_jq
  */
 function bw_jq( $text ) {
-  global $bw_jq;
-  if ( !isset( $bw_jq ) ) {
-    wp_enqueue_script( 'jquery' ); 
-    if ( !is_admin() ) {
-      add_action( 'wp_footer', "bw_jq_flush", 25 );
-    }  
-    //bw_trace2( $bw_jq, "bw_jq not set" );  
-  }
-  $bw_jq .=$text;
-  //bw_trace2( $bw_jq, "bw_jq", false );  
-
-  if ( is_admin() ) {
-    bw_jq_flush();
-  }  
+	global $bw_jq;
+	if ( !isset( $bw_jq ) ) {
+		wp_enqueue_script( 'jquery' ); 
+		if ( !is_admin() ) {
+			add_action( 'wp_footer', "bw_jq_flush", 25 );
+		}  
+	 //bw_trace2( $bw_jq, "bw_jq not set" );  
+	}
+	$bw_jq .=$text;
+	//bw_trace2( $bw_jq, "bw_jq", false );  
+	if ( is_admin() ) {
+		bw_jq_flush();
+	}  
 }
 
 /**
