@@ -112,8 +112,8 @@ First version for WordPress PHP library management
 
 ## Changelog 
 # 0.0.8 
-* Tested with WordPress 4.7.1 and WordPress Multisite
 * Changed: Synchronized with oik v3.1.1 and oik-bwtrace v2.1.0
+* Tested with WordPress 4.7.1 and WordPress Multisite
 
 # 0.0.7 
 * Tested: With WordPress 4.5.2 and WordPress MultiSite

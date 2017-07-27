@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: oik library management 
-Plugin URI: http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/
+Plugin URI: https://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/
 Description: OIK library management - for shared libraries
-Version: 0.0.8
+Version: 0.1.0
 Author: bobbingwide
-Author URI: http://www.oik-plugins.com/author/bobbingwide
+Author URI: https://www.oik-plugins.com/author/bobbingwide
 Text Domain: oik-lib
 Domain Path: /languages/
 License: GPLv2 or later
@@ -37,7 +37,8 @@ function oik_lib_admin_menu() {
 	//bw_backtrace();
 	
 	$loaded = oik_require_lib( "oik-admin" );
-	//oik_lib_options_add_page();
+	$loaded = oik_require_lib( "class-BW-" );
+	oik_lib_options_add_page();
 
 	oik_lib_maybe_activate_mu();
   add_action( "admin_notices", "oik_lib_admin_notices", 8 );
@@ -123,7 +124,14 @@ function oik_lib_boot_oik_lib() {
  */ 
 function oik_lib_oik_query_libs( $libraries ) {
 	bw_trace2( null, null, true, BW_TRACE_VERBOSE );
-	$libs = array( "bobbfunc" => null, "bobbforms" => "bobbfunc:3.0.0", "oik-admin" => "bobbforms", "oik-depends" => null, "oik-activation" => "oik-depends" );
+	$libs = array( "bobbfunc" => null
+							, "bobbforms" => "bobbfunc:3.0.0"
+							, "oik-admin" => "bobbforms"
+							, "oik-depends" => null
+							, "oik-activation" => "oik-depends" 
+							, "class-BW-" => "bobbfunc,oik-admin"
+							, "class-oik-update" => null
+							);
 	$libraries = oik_lib_check_libs( $libraries, $libs, "oik-lib" );
 	bw_trace2( $libraries, "new libraries", false, BW_TRACE_VERBOSE );
 	return( $libraries );
