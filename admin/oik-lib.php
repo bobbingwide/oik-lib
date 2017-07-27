@@ -33,9 +33,9 @@ function oik_lib_admin_do_page() {
  */ 
 function oik_lib_options_do_page() {
 	bw_context( "textdomain", "oik-lib" );
-  oik_menu_header( "library management" );
-  oik_box( null, null, "Options", "oik_lib_options" ); 
-  oik_box( null, null, "Registered libraries", "oik_lib_display_libraries" ); 
+  BW_::oik_menu_header( __( "library management", "oik-lib" ) );
+  BW_::oik_box( null, null, __( "Options", "oik-lib" ), "oik_lib_options" ); 
+  BW_::oik_box( null, null, __( "Registered libraries", "oik-lib" ), "oik_lib_display_libraries" ); 
   oik_menu_footer();
   bw_flush();
 }
