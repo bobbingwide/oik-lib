@@ -1,4 +1,4 @@
-<?php // (C) Copyright Bobbing Wide 2015,2016
+<?php // (C) Copyright Bobbing Wide 2015-2017
 
 /**
  * Class for micro managing shared libraries of PHP code
@@ -156,7 +156,7 @@ class OIK_libs {
 				bw_backtrace( BW_TRACE_ERROR );
 				$lib = $this->error( "not found", "lib not found for $library,$version", "$library,$version" );
 			}
-		}
+		} 
 		return( $lib );
 	}
 	
@@ -292,6 +292,7 @@ class OIK_libs {
 	
 		$selected = $this->is_loaded( $library, $version );
 		if ( !$selected ) {
+			bw_trace2( $this->libraries, "this libraries", false, BW_TRACE_VERBOSE );
 			if ( $this->libraries && count( $this->libraries ) ) {
 				foreach ( $this->libraries as $key => $lib ) {
 					if ( $lib->library == $library ) {
@@ -302,7 +303,7 @@ class OIK_libs {
 								$selected = $this->load_dependencies( $lib ); 
 								$selected = $lib;
 							} else {
-								/* Not already loaded but this versions not compatible so move on */
+								/* Not already loaded but this version's not compatible so move on */
 							}
 						} else {
 							if ( $compatible ) {
@@ -325,6 +326,18 @@ class OIK_libs {
 			}
 		}
 		bw_trace2( $selected, "selected", true, BW_TRACE_VERBOSE );
+		if ( !$selected ) {
+		
+			if ( $spos = strpos( $library, "/" ) ) {
+				$library = substr( $library, $spos+1 ); 
+			}
+			$library_file = oik_require_lib_fallback( $library );
+			if ( $library_file ) {
+				$loaded_version = $this->loaded_version( $library );
+				$selected = $this->register_lib( $library, $library_file, null, $loaded_version );
+				$this->loaded( $selected );
+			}
+		}
 		return( $selected );
 	}
 	
@@ -355,7 +368,7 @@ class OIK_libs {
 	/**
 	 * Determine if the library has been checked for dependencies
 	 * 
-	 * If the library is already loaded then we assume that its dependencies have been checked
+	 * If the library is already loaded then we assume that its dependencies have been checked.
 	 * If the library has already been checked then we don't need to do it again.
 	 * Each library that's checked is added to the array of checked libraries.
 	 *
@@ -431,6 +444,23 @@ class OIK_libs {
 		$this->libraries = array();
 	  oik_lib_register_default_libs();
 	}
+	
+	/**
+	 * Returns the loaded version of the library
+	 *
+	 * @param string $library
+	 */
+	function loaded_version( $library ) {
+		$loaded_version = null;
+		$constant_name = str_replace( "-", "_", $library );
+		$constant_name = strtoupper( $constant_name );
+		$constant_name .= '_INCLUDED';
+		if ( defined( $constant_name ) ) {
+			$loaded_version = constant( $constant_name );
+		}
+		return $loaded_version;
+	}
+
 
 }
 
