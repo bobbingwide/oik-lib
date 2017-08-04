@@ -1,97 +1,142 @@
-# Copyright (C) 2015 oik library management
+# Copyright (C) 2017 oik library management
 # This file is distributed under the same license as the oik library management package.
 msgid ""
 msgstr ""
-"Project-Id-Version: oik library management 0.0.3\n"
+"Project-Id-Version: oik library management 0.1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/oik-lib\n"
-"POT-Creation-Date: 2015-08-14 16:50:34+00:00\n"
+"POT-Creation-Date: 2017-08-04 09:52:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Plural-Forms: nplurals=2; plural=n == 1 ? 0 : 1;\n"
 "Language: bb_BB\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2017-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-#. #-#-#-#-#  oik-lib.pot (oik library management 0.0.3)  #-#-#-#-#
+#. #-#-#-#-#  oik-lib.pot (oik library management 0.1.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: admin/oik-lib.php:24
 msgid "oik library management"
-msgstr "OIk lbirray meaneamngt"
+msgstr "OIk lbiarry mnagamenet"
+
 
 #: admin/oik-lib.php:36
 msgid "library management"
-msgstr "lriarby mgaemneant"
+msgstr "lbiarry mnagamenet"
+
 
 #: admin/oik-lib.php:37
 msgid "Options"
-msgstr "Oipotns"
+msgstr "Otpoins"
+
 
 #: admin/oik-lib.php:38
 msgid "Registered libraries"
-msgstr "Rsetigered liierrabs"
+msgstr "Rgesieterd lbiarires"
+
 
 #: admin/oik-lib.php:51
 msgid "Enable as Must Use plugin?"
-msgstr "Elbnae As Must UsE pulgin?"
+msgstr "Eanlbe As Msut UsE pulign?"
+
 
 #: admin/oik-lib.php:53
 msgid "Save changes"
-msgstr "Save cehgnas"
+msgstr "Svae cahgnes"
+
 
 #: admin/oik-lib.php:78
 msgid "Registered libraries, showing the versions and dependencies."
-msgstr "Retgseried lriiarebs, sniwhog thE vsriones And denepdnecies."
+msgstr "Rgesieterd lbiarires, sohiwng thE vreisnos And dpeneedcneis."
+
 
 #: admin/oik-lib.php:84
 msgid "Library,Source,Dependencies,Version,Args"
-msgstr "Lrarbiy,Sruoce,Dnpicneedees,Veiosrn,Agrs"
+msgstr "Lbiarry,Suocre,Dpeneedcneis,Vreison,Agrs"
 
-#: libs/bobbforms.php:462
+
+#: libs/bobbforms.php:510
 msgid "None"
 msgstr "Nnoe"
 
-#: libs/oik-activation.php:21
+
+#: libs/class-BW-.php:104 libs/oik-admin.php:69
+msgid "Toggle panel: %s"
+msgstr "Tgolge pnael: %s"
+
+
+#: libs/oik-activation.php:24
 msgid "Install"
-msgstr "Itanlsl"
+msgstr "Isnatll"
 
-#: libs/oik-activation.php:49
+
+#: libs/oik-activation.php:53
 msgid "Activate"
-msgstr "Aivtcate"
+msgstr "Atcvitae"
 
-#: libs/oik-activation.php:71
-msgid " Upgrade"
-msgstr " Udpagre"
 
-#: libs/oik-activation.php:186 libs/oik-depends.php:139
+#: libs/oik-activation.php:73
+msgid "Update"
+msgstr "Udptae"
+
+
+#: libs/oik-activation.php:191 libs/oik-depends.php:144
 msgid "%1$s may not be fully functional."
-msgstr "%1$s mAy nOt bE flluy ftonuaincl."
+msgstr "%1$s mAy nOt bE fluly fnutcoianl."
 
-#: libs/oik-activation.php:188 libs/oik-depends.php:141
+
+#: libs/oik-activation.php:193 libs/oik-depends.php:146
 msgid ""
 "Please install and activate the required minimum version of this plugin:"
 msgstr ""
-"Paelse istlnal And aatitvce thE reuqried muimnim veoirsn Of tihs puglin:"
+"Pelsae isnatll And atcvitae thE rqeiuerd mnimium vreison Of tihs pulign:"
 
-#: libs/oik-admin.php:50
-msgid "Click to toggle"
-msgstr "Ccilk tO tgogle"
+
+#: libs/oik-depends.php:96
+msgid "Plugin %1$s may not be fully functional."
+msgstr "Pulign %1$s mAy nOt bE fluly fnutcoianl."
+
+
+#: libs/oik-depends.php:99
+msgid ""
+"Please install and activate the required minimum version of this plugin: %1$s"
+msgstr ""
+"Pelsae isnatll And atcvitae thE rqeiuerd mnimium vreison Of tihs pulign: %1$s"
+
+
+#: libs/oik-depends.php:278
+msgid "Install %1$s"
+msgstr "Isnatll %1$s"
+
+
+#: libs/oik-depends.php:306
+msgid "Activate %1$s"
+msgstr "Atcvitae %1$s"
+
+
+#: libs/oik-depends.php:324
+msgid "Upgrade %1$s"
+msgstr "Ugparde %1$s"
+
 
 #. Plugin URI of the plugin/theme
 msgid ""
-"http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/"
+"https://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/"
 msgstr ""
-"http://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/"
+"https://www.oik-plugins.com/oik-plugins/oik-lib-shared-library-management/"
+
 
 #. Description of the plugin/theme
 msgid "OIK library management - for shared libraries"
-msgstr "OIK lriarby maeenmgnat - fOr srhaed lreaibirs"
+msgstr "OIK lbiarry mnagamenet - fOr saherd lbiarires"
+
 
 #. Author of the plugin/theme
 msgid "bobbingwide"
-msgstr "bibwodgnbie"
+msgstr "bboibgniwde"
+
 
 #. Author URI of the plugin/theme
-msgid "http://www.oik-plugins.com/author/bobbingwide"
-msgstr "http://www.oik-plugins.com/author/bobbingwide"
+msgid "https://www.oik-plugins.com/author/bobbingwide"
+msgstr "https://www.oik-plugins.com/author/bobbingwide"
 
