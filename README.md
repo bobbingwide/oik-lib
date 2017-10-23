@@ -1,11 +1,11 @@
 # oik-lib 
 ![banner](https://raw.githubusercontent.com/bobbingwide/oik-lib/master/assets/oik-lib-banner-772x250.jpg)
 * Contributors: bobbingwide, vsgloik
-* Donate link: http://www.oik-plugins.com/oik/oik-donate/
+* Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: library, boot, shared, trace, Must-Use, dependency, version
 * Requires at least: 4.2
-* Tested up to: 4.7.1
-* Stable tag: 0.0.8
+* Tested up to: 4.8.2
+* Stable tag: 0.1.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Text Domain: oik-lib
@@ -84,6 +84,9 @@ See the official plugin documentation at [oik-plugins](http://oik-plugins.com/oi
 1. oik-lib in action
 
 ## Upgrade Notice 
+# 0.1.0 
+Synchronized with oik v3.2.0-RC1
+
 # 0.0.8 
 Synchronized with oik v3.1.1, oik-bwtrace v2.1.0 etc
 
@@ -111,6 +114,9 @@ Upgrade to get better support for plugins performing dependency checking
 First version for WordPress PHP library management
 
 ## Changelog 
+# 0.1.0 
+* Changed: update lib files to match those in oik v3.2.0-RC1 https://github.com/bobbingwide/oik-lib/issues/#5
+
 # 0.0.8 
 * Changed: Synchronized with oik v3.1.1 and oik-bwtrace v2.1.0
 * Tested with WordPress 4.7.1 and WordPress Multisite
@@ -159,7 +165,7 @@ First version for WordPress PHP library management
 
 ## Further reading 
 If you want to read more about the oik plugins then please visit the
-[oik plugin](http://www.oik-plugins.com/oik)
+[oik plugin](https://www.oik-plugins.com/oik)
 **"the oik plugin - for often included key-information"**
 
 
