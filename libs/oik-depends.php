@@ -1,6 +1,6 @@
-<?php // (C) Copyright Bobbing Wide 2012-2017
+<?php // (C) Copyright Bobbing Wide 2012-2020
 if ( !defined( "OIK_DEPENDS_INCLUDED" ) ) {
-define( "OIK_DEPENDS_INCLUDED", "3.2.0" );
+define( "OIK_DEPENDS_INCLUDED", "3.2.4" );
 
 /**
  * Dependency checking library functions
@@ -47,10 +47,17 @@ function bw_get_all_plugin_names( $active_plugins ) {
 		if ( count( $active_plugins ) ) {
 			foreach ( $active_plugins as $key => $value ) {
 				$name = basename( $value, '.php' );
-				if ( !isset( $names[ $name ] ) ) {
+				$dir = dirname( $value );
+				if ( ( $name == $dir ) && !isset( $names[ $name ] ) ) {
 					$names[$name] = $value;
 				}
-			} 
+			}
+			foreach ( $active_plugins as $key => $value ) {
+				$name = basename( $value, '.php' );
+				if ( !isset( $names[ $name ] ) ) {
+					$names[ $name ] = $value;
+				}
+			}
 		}	
   }
   return( $names ); 
@@ -137,7 +144,7 @@ function oik_plugin_plugin_inactive( $plugin=null, $dependencies=null, $problem=
 
 	static $checked = array();
   $plugin_name = basename( $plugin, ".php" );
-  $dependencies = str_replace( ":", __( " version ", null ), $dependencies );
+  $dependencies = str_replace( ":", ' ' . __( "version", null ) . ' ', $dependencies );
   list( $depends ) = explode(' ', trim( $dependencies ));
   $text = "<p><b>";
   $text .= sprintf( __( '%1$s may not be fully functional.', null), $plugin_name );
