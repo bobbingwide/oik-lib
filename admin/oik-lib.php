@@ -1,10 +1,8 @@
-<?php // (C) Copyright Bobbing Wide 2015
+<?php // (C) Copyright Bobbing Wide 2015, 2021
 
 /**
  * Admin interface for oik-lib
- * 
- * 
- * 
+ *
  * Depends: oik-admin
  * Provides: oik-admin, bobbfunc, bobbforms
  */
@@ -35,7 +33,7 @@ function oik_lib_options_do_page() {
 	bw_context( "textdomain", "oik-lib" );
   BW_::oik_menu_header( __( "library management", "oik-lib" ) );
   BW_::oik_box( null, null, __( "Options", "oik-lib" ), "oik_lib_options" ); 
-  BW_::oik_box( null, null, __( "Registered libraries", "oik-lib" ), "oik_lib_display_libraries" ); 
+  BW_::oik_box( null, null, __( "Registered libraries", "oik-lib" ), "oik_lib_display_libraries" );
   oik_menu_footer();
   bw_flush();
 }
@@ -77,24 +75,14 @@ function oik_lib_options() {
 function oik_lib_display_libraries() {
 	p( "Registered libraries, showing the versions and dependencies." );
 	$oik_libs = oik_libs();
-	//bw_trace2( $oik_libs, "oik_libs" );
-	//$oik_libs->display_libs();
 	$libraries = $oik_libs->libraries;
 	stag( "table", "wide-fat" );
 	$labels = bw_as_array( __( "Library,Source,Dependencies,Version,Args", 'oik-lib' ) );
 	bw_tablerow( $labels, "tr", "th" );
 	foreach ( $libraries as $lib => $data ) {
-		//print_r( $lib );
-		//bw_trace2( $data, "data" );
-		//$data->deps();
 		$data->deps = $data->args['deps'];
 		unset( $data->error );
-		bw_tablerow( $data );
+		bw_tablerow( [ $data->library, $data->src, $data->deps, $data->version, $data->args ] );
 	}
 	etag( "table" );
 }
-
-
-
-
-
