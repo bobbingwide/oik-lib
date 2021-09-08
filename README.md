@@ -1,11 +1,11 @@
 # oik-lib 
-![banner](https://raw.githubusercontent.com/bobbingwide/oik-lib/master/assets/oik-lib-banner-772x250.jpg)
+![banner](assets/oik-lib-banner-772x250.jpg)
 * Contributors: bobbingwide, vsgloik
 * Donate link: https://www.oik-plugins.com/oik/oik-donate/
 * Tags: library, boot, shared, trace, Must-Use, dependency, version
 * Requires at least: 4.8
-* Tested up to: 4.9
-* Stable tag: 0.1.1
+* Tested up to: 5.8
+* Stable tag: 0.2.0
 * License: GPLv2 or later
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Text Domain: oik-lib
@@ -48,7 +48,7 @@ The plugin is intended to be easy to install and maintain and does not require S
 * Version checking
 * Support Composer packages
 
-See [oik-lib - requirements summary](http://www.oik-plugins.com/wordpress-plugins-from-oik-plugins/free-oik-plugins/oik-lib-shared-library-management/oik-lib-requirements-summary/)
+See [oik-lib - requirements summary](https://www.oik-plugins.com/wordpress-plugins-from-oik-plugins/free-oik-plugins/oik-lib-shared-library-management/oik-lib-requirements-summary/)
 
 # Implementation 
 
@@ -84,6 +84,9 @@ See the official plugin documentation at [oik-plugins](http://oik-plugins.com/oi
 1. oik-lib in action
 
 ## Upgrade Notice 
+# 0.2.0 
+Synchronized with oik v4.1.2's improved autoload. Tested with PHP 8.0
+
 # 0.1.1 
 Synchronized with oik v3.2.1
 
@@ -117,6 +120,14 @@ Upgrade to get better support for plugins performing dependency checking
 First version for WordPress PHP library management
 
 ## Changelog 
+# 0.2.0 
+* Fixed: Pass array not object to bw_tablerow.,https://github.com/bobbingwide/oik-libs/issues/#7
+* Changed: Reconcile PHP 8 updates
+* Changed: Reconcile libs/class-oik-update.php
+* Changed: Synchronized with oik v4.1.2
+* Tested: With WordPress 5.8
+* Tested: With PHP 8.0
+
 # 0.1.1 
 * Changed: Synchronized with oik v3.2.1
 
