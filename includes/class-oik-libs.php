@@ -1,4 +1,4 @@
-<?php // (C) Copyright Bobbing Wide 2015-2017
+<?php // (C) Copyright Bobbing Wide 2015-2017, 2023
 
 /**
  * Class for micro managing shared libraries of PHP code
@@ -153,7 +153,7 @@ class OIK_libs {
 				}
 			} else {
 				bw_trace2( $lib, "lib not found for $library,$version", false, BW_TRACE_ERROR );
-				bw_backtrace( BW_TRACE_ERROR );
+				bw_backtrace( BW_TRACE_VERBOSE );
 				$lib = $this->error( "not found", "lib not found for $library,$version", "$library,$version" );
 			}
 		} 
@@ -219,12 +219,15 @@ class OIK_libs {
 	 */
 	function is_already_loaded( $lib ) {
 		$src = $lib->src;
-		$src = str_replace( "/", DIRECTORY_SEPARATOR, $src );
-		$files = get_included_files();
-		bw_trace2( $files, "included files", false, BW_TRACE_VERBOSE );
-		$loaded = bw_array_get( array_flip( $files), $src, null );
-		if ( $loaded ) {
-			$loaded = $this->loaded( $lib );
+		$loaded = false;
+		if ( null !== $src ) {
+			$src  =str_replace( "/", DIRECTORY_SEPARATOR, $src );
+			$files=get_included_files();
+			bw_trace2( $files, "included files", false, BW_TRACE_VERBOSE );
+			$loaded=bw_array_get( array_flip( $files ), $src, null );
+			if ( $loaded ) {
+				$loaded=$this->loaded( $lib );
+			}
 		}
 		bw_trace2( $loaded, "already loaded", true, BW_TRACE_DEBUG );
 		return( $loaded );		
@@ -252,8 +255,10 @@ class OIK_libs {
 	 * @param string $required_version may include wildcards
 	 */ 
 	function compatible_version( $current_version, $required_version ) {
-		bw_trace2( null, null, true, BW_TRACE_VERBOSE );
-		if ( "*" != $required_version ) {
+		//bw_trace2( null, null, true, BW_TRACE_VERBOSE );
+		bw_trace2();
+
+		if ( ($current_version !== null) && ($required_version !== null) && ("*" != $required_version) ) {
 			$version_compare = version_compare( $current_version, $required_version );
 			$acceptable = false;
 			bw_trace2( $version_compare, "version compare", false, BW_TRACE_VERBOSE );

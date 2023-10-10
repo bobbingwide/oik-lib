@@ -142,7 +142,7 @@ function oik_lib_oik_query_libs( $libraries ) {
  *
  */
 function oik_lib_options_add_page() {
-	bw_backtrace();
+	//bw_backtrace();
 	oik_require( "admin/oik-lib.php", "oik-lib" );
 	oik_lib_admin_do_page();
 }
